@@ -46,6 +46,7 @@ service:
   port: 80
   nodePort: 31081
   targetPort: 8081
+  nodePortPreview: 31181
 
 ingress:
   enabled: false
