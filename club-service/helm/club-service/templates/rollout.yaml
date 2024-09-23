@@ -12,7 +12,7 @@ spec:
     blueGreen:
       activeService: {{ include "club-service.fullname" . }}
       previewService: {{ include "club-service.fullname" . }}-preview
-      autoPromotionEnabled: false
+      autoPromotionEnabled: true
   selector:
     matchLabels:
       {{- include "club-service.selectorLabels" . | nindent 6 }}
