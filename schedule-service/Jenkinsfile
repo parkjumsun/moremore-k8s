@@ -2,17 +2,17 @@ pipeline{
     agent any
 
     environment { 
-        DOCKERHUB_REPOSITORY = "parkjumsun/club-service"  //docker hub id와 repository 이름
+        DOCKERHUB_REPOSITORY = "parkjumsun/schedule-service"  //docker hub id와 repository 이름
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-jenkins') // jenkins에 등록해 놓은 docker hub credentials 이름
         // dockerImage = ''
         // containerName = 'invitation'
         // PORT = '8090:8090'
         
-        SOURCE_WORKSPACE = 'source/backend/ClubService'
+        SOURCE_WORKSPACE = 'source/backend/ScheduleService'
         SOURCE_ROOT = 'source'
         SOURCE_GIT_URL = 'https://lab.ssafy.com/s11-fintech-finance-sub1/S11P21A605.git'
-        SOURCE_GIT_BRANCH = 'club/main'
-        SOURCE_BUILD_DIR = 'source/backend/ClubService/build/libs'
+        SOURCE_GIT_BRANCH = 'schedule/main'
+        SOURCE_BUILD_DIR = 'source/backend/ScheduleService/build/libs'
         
         
         DEPLOYMENT_GIT_USER_NAME = 'parkjumsun'
@@ -20,8 +20,8 @@ pipeline{
         DEPLOYMENT_REPO_NAME = 'moremore-k8s'
         DEPLOYMENT_CONFIG_GIT_URL = 'https://github.com/parkjumsun/moremore-k8s.git'
         DEPLOYMENT_CONFIG_ROOT = 'config' 
-        DEPLOYMENT_CONFIG_DOCKER = 'config/club-service/docker'
-        DEPLOYMENT_CONFIG_K8S = 'config/club-service/helm'        
+        DEPLOYMENT_CONFIG_DOCKER = 'config/schedule-service/docker'
+        DEPLOYMENT_CONFIG_K8S = 'config/schedule-service/helm'        
         // SCANNER_HOME = tool 'sonarqube-scanner'
         // SONAR_PROJECT_NAME = 'S11P12A310'
         // SONAR_PROJECT_KEY = 'S11P12A310'
@@ -46,7 +46,7 @@ pipeline{
                 script{
                     def currentDir = pwd()
                     dir(SOURCE_WORKSPACE) {
-                        withCredentials([file(credentialsId: 'club-application', variable: 'key')]) {
+                        withCredentials([file(credentialsId: 'schedule-application', variable: 'key')]) {
                             sh 'chmod -R u+w src/main/resources'
                             sh 'cp ${key} src/main/resources/application-prod.yml'
                         } 
@@ -99,7 +99,7 @@ pipeline{
             steps{
                 script{
                     def currentDir = pwd()
-                    sh 'cp ${SOURCE_BUILD_DIR}/ClubService-0.0.1-SNAPSHOT.jar ${DEPLOYMENT_CONFIG_DOCKER}/ClubService.jar '
+                    sh 'cp ${SOURCE_BUILD_DIR}/ScheduleService-0.0.1-SNAPSHOT.jar ${DEPLOYMENT_CONFIG_DOCKER}/ScheduleService.jar '
                     dir(DEPLOYMENT_CONFIG_DOCKER){
                         sh 'docker build . -t ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}'
                         sh 'cd ${currentDir}'
@@ -143,8 +143,8 @@ pipeline{
                     sh """
                         git config user.email ${DEPLOYMENT_GIT_USER_EMAIL}
                         git config user.name ${DEPLOYMENT_GIT_USER_NAME}
-                        sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./club-service/Chart.yaml
-                        git add ./club-service/Chart.yaml
+                        sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./schedule-service/Chart.yaml
+                        git add ./schedule-service/Chart.yaml
                         git commit -m "config: image version 업데이트, 버전: "${BUILD_NUMBER}"" 
                         cd ${currentDir}
                     """
@@ -171,7 +171,7 @@ pipeline{
         stage('check k8s manifest') {
             steps {
                 // K8S 배포
-                sh 'helm template club-service ./${DEPLOYMENT_CONFIG_K8S}/club-service -n moremore --create-namespace'
+                sh 'helm template schedule-service ./${DEPLOYMENT_CONFIG_K8S}/schedule-service -n moremore --create-namespace'
             }
         }
     }
