@@ -1,11 +1,11 @@
-# Default values for club-service.
+# Default values for schedule-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: parkjumsun/club-service
+  repository: parkjumsun/schedule-service
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

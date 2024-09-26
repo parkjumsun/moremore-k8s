@@ -1,25 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: {{ include "club-service.fullname" . }}
+  name: {{ include "schedule-service.fullname" . }}
   labels:
-    {{- include "club-service.labels" . | nindent 4 }}
+    {{- include "schedule-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   strategy:
     blueGreen:
-      activeService: {{ include "club-service.fullname" . }}
-      previewService: {{ include "club-service.fullname" . }}-preview
+      activeService: {{ include "schedule-service.fullname" . }}
+      previewService: {{ include "schedule-service.fullname" . }}-preview
       autoPromotionEnabled: true
   selector:
     matchLabels:
-      {{- include "club-service.selectorLabels" . | nindent 6 }}
+      {{- include "schedule-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "club-service.labels" . | nindent 8 }}
+        {{- include "schedule-service.labels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

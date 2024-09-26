@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "club-service.fullname" . }}
+  name: {{ include "schedule-service.fullname" . }}
   labels:
-    {{- include "club-service.labels" . | nindent 4 }}
+    {{- include "schedule-service.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "club-service.fullname" . }}
+    name: {{ include "schedule-service.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

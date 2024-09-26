@@ -1,6 +1,6 @@
 apiVersion: v2
-name: club-service
-description: A club-service in moremore application
+name: schedule-service
+description: A schedule-service in moremore application
 
 # A chart can be either an 'application' or a 'library' chart.
 #
