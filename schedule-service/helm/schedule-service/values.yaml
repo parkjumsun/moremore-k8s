@@ -44,9 +44,9 @@ securityContext:
 service:
   type: NodePort
   port: 80
-  nodePort: 31081
+  nodePort: 31082
   targetPort: 80
-  nodePortPreview: 31181
+  nodePortPreview: 31182
 
 ingress:
   enabled: false
