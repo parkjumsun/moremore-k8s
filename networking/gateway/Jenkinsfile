@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(choices: ['option', 'kubectl apply', 'kubectl delete'], name: 'DEPLOY_COMMAND', description: '배포 타입 선택')
+    }
+
+    environment {
+        INSTALL_PATH = 'gateway'
+    }
+
+    stages {
+        stage('deploy gateway') {
+            steps {
+                script{
+                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/gateway.yaml"
+                }
+            }
+        }
+    }
+}
