@@ -7,13 +7,14 @@ pipeline {
 
     environment {
         INSTALL_PATH = 'networking/gateway'
+        NAME_SPACE = 'moremore'
     }
 
     stages {
         stage('deploy gateway') {
             steps {
                 script{
-                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/gateway.yaml"
+                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/gateway.yaml -n ${NAME_SPACE}"
                 }
             }
         }

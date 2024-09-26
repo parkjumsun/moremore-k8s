@@ -8,13 +8,14 @@ pipeline {
 
     environment {
         INSTALL_PATH = 'networking/virtualService'
+        NAME_SPACE = 'moremore'
     }
 
     stages {
         stage('deploy virtual service') {
             steps {
                 script{
-                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/${params.TARGET_VIRTUAL_SERVICE}.yaml"
+                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/${params.TARGET_VIRTUAL_SERVICE}.yaml -n ${NAME_SPACE}"
                 }
             }
         }
