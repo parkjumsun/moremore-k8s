@@ -3,11 +3,11 @@ pipeline {
 
     parameters {
         choice(choices: ['option', 'kubectl apply', 'kubectl delete'], name: 'DEPLOY_COMMAND', description: '배포 타입 선택')
-        choice(choices: ['option', 'club-vs'], name: 'TARGET_VIRTUAL_SERVICE', description: 'Virtual Service 대상 선택')
+        choice(choices: ['option', 'clubVs'], name: 'TARGET_VIRTUAL_SERVICE', description: 'Virtual Service 대상 선택')
     }
 
     environment {
-        INSTALL_PATH = 'virtual-service'
+        INSTALL_PATH = 'networking/virtualService'
     }
 
     stages {
