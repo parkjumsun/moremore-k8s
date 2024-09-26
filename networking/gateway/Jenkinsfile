@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        INSTALL_PATH = 'gateway'
+        INSTALL_PATH = 'networking/gateway'
     }
 
     stages {
