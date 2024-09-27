@@ -19,7 +19,8 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "schedule-service.labels" . | nindent 8 }}
+        app: {{ .Values.podLabels.app | default "my-app" }}
+        version: {{ .Values.podLabels.version | default "1.0.0" }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
