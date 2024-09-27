@@ -83,7 +83,7 @@ pipeline{
             steps{
                 script{
                     def currentDir = pwd()
-                    sh 'cp ${SOURCE_PACKAGE_DIR}/* ${DEPLOYMENT_CONFIG_DOCKER}/* '
+                    sh 'cp ${SOURCE_PACKAGE_DIR}/* ${DEPLOYMENT_CONFIG_DOCKER}/ '
                     dir(DEPLOYMENT_CONFIG_DOCKER){
                         sh 'docker build . -t ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}'
                         sh 'cd ${currentDir}'
