@@ -1,6 +1,6 @@
 apiVersion: v2
-name: schedule-service
-description: A schedule-service in moremore application
+name: frontend
+description: A frontend in moremore application
 
 # A chart can be either an 'application' or a 'library' chart.
 #
