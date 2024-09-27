@@ -47,6 +47,7 @@ service:
   nodePort: 31081
   targetPort: 80
   nodePortPreview: 31181
+  portName: 'http-club'
 
 ingress:
   enabled: false
