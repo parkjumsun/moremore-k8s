@@ -30,7 +30,7 @@ pipeline{
     }
         
     stages{
-        stage('Source clone'){
+        stage('Clone source repository'){
             steps{
                 script{
                     def currentDir = pwd()
@@ -70,7 +70,7 @@ pipeline{
         // }
 
         
-        stage('Gradle build'){
+        stage('Build using gradle'){
             steps{
                 script{
                     def currentDir = pwd()
@@ -83,7 +83,7 @@ pipeline{
             }
         }
 
-        stage('Deployment config clone'){
+        stage('Clone deployment config repository'){
             steps{
                 script{
                     def currentDir = pwd()
@@ -95,7 +95,7 @@ pipeline{
             }
         }
         
-        stage('docker build'){
+        stage('Build container image'){
             steps{
                 script{
                     def currentDir = pwd()
@@ -107,7 +107,7 @@ pipeline{
                 }
             }
         }        
-        stage('Login'){
+        stage('Login dockerhub'){
             steps{
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin" // docker hub 로그인
@@ -115,7 +115,7 @@ pipeline{
             }
         }
         
-        stage('Deploy our image') { 
+        stage('Push image to registry') { 
             steps {
                 script {
                     sh 'docker push ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}' //docker push
@@ -123,7 +123,7 @@ pipeline{
             }
         } 
         
-        stage('Remove Previous image') {
+        stage('Remove build image') {
             steps {
                 script {
                     try {
@@ -135,7 +135,7 @@ pipeline{
             }
         }
         
-        stage('change version of image') {
+        stage('Change version of image') {
             steps {
               script{
                 def currentDir = pwd()
@@ -153,7 +153,7 @@ pipeline{
             }
         }
         
-        stage('push updated file') {
+        stage('Push updated file to config repository') {
             steps {
                 script{
                   def currentDir = pwd()
@@ -168,7 +168,7 @@ pipeline{
             }
         }        
 
-        stage('check k8s manifest') {
+        stage('Check k8s manifest') {
             steps {
                 // K8S 배포
                 sh 'helm template club-service ./${DEPLOYMENT_CONFIG_K8S}/club-service -n moremore --create-namespace'
