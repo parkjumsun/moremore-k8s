@@ -47,6 +47,7 @@ service:
   nodePort: 31082
   targetPort: 80
   nodePortPreview: 31182
+  portName: 'http-schedule'
 
 ingress:
   enabled: false

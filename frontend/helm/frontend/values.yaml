@@ -47,6 +47,7 @@ service:
   nodePort: 31080
   targetPort: 80
   nodePortPreview: 31180
+  portName: 'http-front'
 
 ingress:
   enabled: false

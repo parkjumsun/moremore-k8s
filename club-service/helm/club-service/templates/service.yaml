@@ -28,6 +28,7 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }} 
       nodePort: {{ .Values.service.nodePortPreview }}
+      name: {{ .Values.service.portName }}-preview
   selector:
     {{- include "club-service.selectorLabels" . | nindent 4 }}
 
