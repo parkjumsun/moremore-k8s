@@ -20,7 +20,7 @@ pipeline{
         DEPLOYMENT_CONFIG_GIT_URL = 'https://github.com/parkjumsun/moremore-k8s.git'
         DEPLOYMENT_CONFIG_ROOT = 'config' 
         DEPLOYMENT_CONFIG_DOCKER = 'config/frontend/docker'
-        DEPLOYMENT_CONFIG_K8S = 'config/frotend/helm'        
+        DEPLOYMENT_CONFIG_K8S = 'config/frontend/helm'        
         // SCANNER_HOME = tool 'sonarqube-scanner'
         // SONAR_PROJECT_NAME = 'S11P12A310'
         // SONAR_PROJECT_KEY = 'S11P12A310'
