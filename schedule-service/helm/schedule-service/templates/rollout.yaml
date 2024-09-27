@@ -16,11 +16,12 @@ spec:
   selector:
     matchLabels:
       {{- include "schedule-service.selectorLabels" . | nindent 6 }}
+      {{- include "schedule-service.podlabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ .Values.podLabels.app | default "my-app" }}
-        version: {{ .Values.podLabels.version | default "1.0.0" }}
+        {{- include "schedule-service.labels" . | nindent 8 }}
+        {{- include "schedule-service.podlabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}

@@ -60,3 +60,16 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Pod labels
+*/}}
+{{- define "frontend.podlabels" -}}
+{{- if .Values.podLabels.app }}
+app: {{ .Values.podLabels.app }}
+{{- end }}
+{{- if .Values.podLabels.version }}
+version: {{ .Values.podLabels.version }}
+{{- end }}
+{{- end }}
