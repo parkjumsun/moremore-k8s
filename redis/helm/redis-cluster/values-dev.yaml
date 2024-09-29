@@ -1,0 +1,4 @@
+
+persistentVolume:
+  name: redis-pv
+  path: /home/ubuntu/infra-config-repo/redis-pv
