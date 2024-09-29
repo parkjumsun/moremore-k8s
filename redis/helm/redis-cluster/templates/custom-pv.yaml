@@ -8,6 +8,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -30,6 +31,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -51,6 +53,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -73,6 +76,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -94,6 +98,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -115,6 +120,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -136,6 +142,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
@@ -158,6 +165,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  storageClassName: "redis-cluster-storage"
   capacity:
     storage: 8Gi
   accessModes:
