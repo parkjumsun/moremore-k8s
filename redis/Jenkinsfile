@@ -22,7 +22,7 @@ pipeline {
                             " --wait --timeout=10m "   // 최대 10분으로 설정
                            sh "eval ${HELM_DEPLOY_COMMAND}"                 
                     } else if (params.DEPLOY_TYPE == "helm_uninstall") {
-                        sh "helm uninstall ${params.TARGET_ISTIO} -n ${NAME_SPACE} "
+                        sh "helm uninstall ${params.TARGET_REDIS} -n ${NAME_SPACE} "
                     } else {
                         echo "skip deploy"
                     }
