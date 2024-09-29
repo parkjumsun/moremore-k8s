@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         INSTALL_PATH = 'redis'
-        NAME_SPACE = 'redis'
+        NAME_SPACE = 'moremore'
     }
 
     stages {
