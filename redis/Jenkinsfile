@@ -4,11 +4,11 @@ pipeline {
     parameters {
         choice(choices: ['option', 'helm_upgrade', 'helm_uninstall'], name: 'DEPLOY_TYPE', description: '배포 타입 선택')
         choice(choices: ['option', 'redis-cluster'], name: 'TARGET_REDIS', description: 'Redis 대상 선택')
-    }
+    }`
 
     environment {
         INSTALL_PATH = 'redis'
-        NAME_SPACE = 'moremore'
+        NAME_SPACE = 'redis'
     }
 
     stages {
