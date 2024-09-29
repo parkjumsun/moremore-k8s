@@ -16,13 +16,11 @@ pipeline {
             steps {
                 script{
                     if (params.DEPLOY_TYPE == "helm_upgrade") {
-                        sh '''
-                            helm upgrade ${params.TARGET_REDIS} ./${INSTALL_PATH}/helm/${params.TARGET_REDIS}
-                            -f ./${INSTALL_PATH}/helm/${params.TARGET_REDIS}/values-dev.yaml"
-                            -n ${NAME_SPACE} --install
-                            --wait --timeout=10m
-                        '''
-
+                        HELM_DEPLOY_COMMAND =  "helm upgrade ${params.TARGET_REDIS} ./${INSTALL_PATH}/helm/${params.TARGET_REDIS} " +
+                            " -f ./${INSTALL_PATH}/helm/${params.TARGET_REDIS}/values-dev.yaml" +
+                            " -n ${NAME_SPACE} --install " + 
+                            " --wait --timeout=10m "   // 최대 10분으로 설정
+                           sh "eval ${HELM_DEPLOY_COMMAND}"                 
                     } else if (params.DEPLOY_TYPE == "helm_uninstall") {
                         sh "helm uninstall ${params.TARGET_ISTIO} -n ${NAME_SPACE} "
                     } else {
