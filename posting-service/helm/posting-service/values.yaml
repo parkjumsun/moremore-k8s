@@ -46,9 +46,9 @@ securityContext:
 service:
   type: NodePort
   port: 80
-  nodePort: 31081
+  nodePort: 31083
   targetPort: 80
-  nodePortPreview: 31181
+  nodePortPreview: 31183
   portName: 'http-posting'
 
 ingress:
