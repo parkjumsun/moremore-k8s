@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: posting-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - moremore-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api/posting
+    route:
+    - destination:
+        host: posting-service
+        port:
+          number: 80
