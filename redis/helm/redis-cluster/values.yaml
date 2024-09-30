@@ -461,14 +461,15 @@ volumePermissions:
   resourcesPreset: "nano"
   ## @param volumePermissions.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
-  resources:
-    requests:
-      cpu: "100M"
-      memory: "128Mi"
-    limits:
-      cpu: "100M"
-      memory: "128Mi"
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
   ##
+  resources: {}
 ## PodSecurityPolicy configuration
 ## ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
 ## @param podSecurityPolicy.create Whether to create a PodSecurityPolicy. WARNING: PodSecurityPolicy is deprecated in Kubernetes v1.21 or later, unavailable in v1.25 or later
@@ -588,14 +589,15 @@ redis:
   resourcesPreset: "nano"
   ## @param redis.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
-  resources:
-    requests:
-      cpu: "100M"
-      memory: "128Mi"
-    limits:
-      cpu: "100M"
-      memory: "128Mi"
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
   ##
+  resources: {}
   ## @param redis.schedulerName Use an alternate scheduler, e.g. "stork".
   ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
   ##
@@ -813,14 +815,15 @@ updateJob:
   resourcesPreset: "nano"
   ## @param updateJob.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
-  resources:
-    requests:
-      cpu: "100M"
-      memory: "128Mi"
-    limits:
-      cpu: "100M"
-      memory: "128Mi"
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
   ##
+  resources: {}
 ## @section Cluster management parameters
 ##
 
@@ -936,13 +939,14 @@ metrics:
   ## Example:
   resources:
     requests:
-      cpu: "100M"
-      memory: "128Mi"
+      cpu: 100M
+      memory: 128Mi
     limits:
-      cpu: "100M"
-      memory: "128Mi"
+      cpu: 100M
+      memory: 128Mi
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ##
+  resources: {}
   ## @param metrics.extraArgs Extra arguments for the binary; possible values [here](https://github.com/oliver006/redis_exporter)
   ## extraArgs:
   ##   check-keys: myKey,myOtherKey
@@ -1158,13 +1162,12 @@ sysctlImage:
   resourcesPreset: "nano"
   ## @param sysctlImage.resources Set container requests and limits for different resources like CPU or memory (essential for production workloads)
   ## Example:
-
-
+  ## resources:
+  ##   requests:
+  ##     cpu: 2
+  ##     memory: 512Mi
+  ##   limits:
+  ##     cpu: 3
+  ##     memory: 1024Mi
   ##
-  resources:
-    requests:
-      cpu: "100M"
-      memory: "128Mi"
-    limits:
-      cpu: "100M"
-      memory: "128Mi"
+  resources: {}
