@@ -939,14 +939,13 @@ metrics:
   ## Example:
   resources:
     requests:
-      cpu: 100M
+      cpu: 50M
       memory: 128Mi
     limits:
       cpu: 100M
       memory: 128Mi
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ##
-  resources: {}
   ## @param metrics.extraArgs Extra arguments for the binary; possible values [here](https://github.com/oliver006/redis_exporter)
   ## extraArgs:
   ##   check-keys: myKey,myOtherKey
