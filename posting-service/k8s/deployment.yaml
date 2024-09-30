@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: moremore
+  name: club-service
+  labels:
+    part-of: moremore
+    name: club-service
+    version: 1.0.0
+    managed-by: kubectl
+spec:
+  selector:
+    matchLabels:
+      part-of: moremore
+      name: club-service
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        part-of: moremore
+        name: club-service
+        version: 1.0.0
+        managed-by: kubectl
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ip-172-26-11-147
+      containers:
+        - name: club-service
+          image: parkjumsun/club-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+              name: http
+          resources:
+            requests:
+              cpu: "500m"
+            limits:
+              cpu: "1000m"
