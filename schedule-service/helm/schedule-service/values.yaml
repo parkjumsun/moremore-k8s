@@ -76,7 +76,7 @@ resources:
   requests:
     cpu: "200m"
   limits:
-    cpu: "500m"
+    cpu: "200m"
 
 autoscaling:
   enabled: false
