@@ -325,7 +325,6 @@ service:
   ##
   type: ClusterIP
   ## @param service.clusterIP Service Cluster IP
-  
   ## e.g.:
   ## clusterIP: None
   ##
@@ -467,7 +466,7 @@ volumePermissions:
       cpu: "100M"
       memory: "128Mi"
     limits:
-      cpu: "200M"
+      cpu: "100M"
       memory: "128Mi"
   ##
 ## PodSecurityPolicy configuration
@@ -594,7 +593,7 @@ redis:
       cpu: "100M"
       memory: "128Mi"
     limits:
-      cpu: "200M"
+      cpu: "100M"
       memory: "128Mi"
   ##
   ## @param redis.schedulerName Use an alternate scheduler, e.g. "stork".
@@ -819,7 +818,7 @@ updateJob:
       cpu: "100M"
       memory: "128Mi"
     limits:
-      cpu: "200M"
+      cpu: "100M"
       memory: "128Mi"
   ##
 ## @section Cluster management parameters
@@ -940,7 +939,7 @@ metrics:
       cpu: "100M"
       memory: "128Mi"
     limits:
-      cpu: "200M"
+      cpu: "100M"
       memory: "128Mi"
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ##
@@ -1167,5 +1166,5 @@ sysctlImage:
       cpu: "100M"
       memory: "128Mi"
     limits:
-      cpu: "200M"
+      cpu: "100M"
       memory: "128Mi"
