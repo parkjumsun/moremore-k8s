@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: moremore
-  name: club-service
+  name: posting-service
   labels:
     part-of: moremore
-    name: club-service
+    name: posting-service
     version: 1.0.0
     managed-by: kubectl
 spec:
   selector:
     matchLabels:
       part-of: moremore
-      name: club-service
+      name: posting-service
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -20,15 +20,15 @@ spec:
     metadata:
       labels:
         part-of: moremore
-        name: club-service
+        name: posting-service
         version: 1.0.0
         managed-by: kubectl
     spec:
       nodeSelector:
         kubernetes.io/hostname: ip-172-26-11-147
       containers:
-        - name: club-service
-          image: parkjumsun/club-service:latest
+        - name: posting-service
+          image: parkjumsun/posting-service:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8081
