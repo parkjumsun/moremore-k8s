@@ -16,3 +16,11 @@ spec:
         host: member-service
         port:
           number: 80
+  - match:
+    - uri:
+        prefix: /api/auth
+    route:
+    - destination:
+        host: member-service
+        port:
+          number: 80
