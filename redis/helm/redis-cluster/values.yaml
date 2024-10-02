@@ -249,7 +249,7 @@ containerSecurityContext:
     type: "RuntimeDefault"
 ## @param usePassword Use password authentication
 ##
-usePassword: true
+usePassword: false
 ## @param password Redis&reg; password (ignored if existingSecret set)
 ## Defaults to a random 10-character alphanumeric string if not set and usePassword is true
 ## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
