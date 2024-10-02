@@ -109,7 +109,7 @@ pipeline{
         }        
         stage('Login dockerhub'){
             steps{
-                withCredentials([membernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', membernameVariable: 'USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin" // docker hub 로그인
                 }
             }
@@ -141,8 +141,8 @@ pipeline{
                 def currentDir = pwd()
                 dir(DEPLOYMENT_CONFIG_K8S){
                     sh """
-                        git config member.email ${DEPLOYMENT_GIT_USER_EMAIL}
-                        git config member.name ${DEPLOYMENT_GIT_USER_NAME}
+                        git config user.email ${DEPLOYMENT_GIT_USER_EMAIL}
+                        git config user.name ${DEPLOYMENT_GIT_USER_NAME}
                         sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./member-service/Chart.yaml
                         git add ./member-service/Chart.yaml
                         git commit -m "config: image version 업데이트, 버전: "${BUILD_NUMBER}"" 
