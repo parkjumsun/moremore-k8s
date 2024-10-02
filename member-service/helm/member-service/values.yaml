@@ -46,9 +46,9 @@ securityContext:
 service:
   type: NodePort
   port: 80
-  nodePort: 31082
+  nodePort: 31084
   targetPort: 80
-  nodePortPreview: 31182
+  nodePortPreview: 31184
   portName: 'http-member'
 
 ingress:
