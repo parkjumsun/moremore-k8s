@@ -2,17 +2,17 @@ pipeline{
     agent any
 
     environment { 
-        DOCKERHUB_REPOSITORY = "parkjumsun/user-service"  //docker hub id와 repository 이름
+        DOCKERHUB_REPOSITORY = "parkjumsun/member-service"  //docker hub id와 repository 이름
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-jenkins') // jenkins에 등록해 놓은 docker hub credentials 이름
         // dockerImage = ''
         // containerName = 'invitation'
         // PORT = '8090:8090'
         
-        SOURCE_WORKSPACE = 'source/backend/UserService'
+        SOURCE_WORKSPACE = 'source/backend/MemberService'
         SOURCE_ROOT = 'source'
         SOURCE_GIT_URL = 'https://lab.ssafy.com/s11-fintech-finance-sub1/S11P21A605.git'
-        SOURCE_GIT_BRANCH = 'user/main'
-        SOURCE_BUILD_DIR = 'source/backend/UserService/build/libs'
+        SOURCE_GIT_BRANCH = 'member/main'
+        SOURCE_BUILD_DIR = 'source/backend/MemberService/build/libs'
         
         
         DEPLOYMENT_GIT_USER_NAME = 'parkjumsun'
@@ -20,8 +20,8 @@ pipeline{
         DEPLOYMENT_REPO_NAME = 'moremore-k8s'
         DEPLOYMENT_CONFIG_GIT_URL = 'https://github.com/parkjumsun/moremore-k8s.git'
         DEPLOYMENT_CONFIG_ROOT = 'config' 
-        DEPLOYMENT_CONFIG_DOCKER = 'config/user-service/docker'
-        DEPLOYMENT_CONFIG_K8S = 'config/user-service/helm'        
+        DEPLOYMENT_CONFIG_DOCKER = 'config/member-service/docker'
+        DEPLOYMENT_CONFIG_K8S = 'config/member-service/helm'        
         // SCANNER_HOME = tool 'sonarqube-scanner'
         // SONAR_PROJECT_NAME = 'S11P12A310'
         // SONAR_PROJECT_KEY = 'S11P12A310'
@@ -46,7 +46,7 @@ pipeline{
                 script{
                     def currentDir = pwd()
                     dir(SOURCE_WORKSPACE) {
-                        withCredentials([file(credentialsId: 'user-application', variable: 'key')]) {
+                        withCredentials([file(credentialsId: 'member-application', variable: 'key')]) {
                             sh 'chmod -R u+w src/main/resources'
                             sh 'cp ${key} src/main/resources/application-prod.yml'
                         } 
@@ -99,7 +99,7 @@ pipeline{
             steps{
                 script{
                     def currentDir = pwd()
-                    sh 'cp ${SOURCE_BUILD_DIR}/UserService-0.0.1-SNAPSHOT.jar ${DEPLOYMENT_CONFIG_DOCKER}/UserService.jar '
+                    sh 'cp ${SOURCE_BUILD_DIR}/MemberService-0.0.1-SNAPSHOT.jar ${DEPLOYMENT_CONFIG_DOCKER}/MemberService.jar '
                     dir(DEPLOYMENT_CONFIG_DOCKER){
                         sh 'docker build . -t ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}'
                         sh 'cd ${currentDir}'
@@ -109,7 +109,7 @@ pipeline{
         }        
         stage('Login dockerhub'){
             steps{
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                withCredentials([membernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', membernameVariable: 'USERNAME')]) {
                     sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin" // docker hub 로그인
                 }
             }
@@ -141,10 +141,10 @@ pipeline{
                 def currentDir = pwd()
                 dir(DEPLOYMENT_CONFIG_K8S){
                     sh """
-                        git config user.email ${DEPLOYMENT_GIT_USER_EMAIL}
-                        git config user.name ${DEPLOYMENT_GIT_USER_NAME}
-                        sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./user-service/Chart.yaml
-                        git add ./user-service/Chart.yaml
+                        git config member.email ${DEPLOYMENT_GIT_USER_EMAIL}
+                        git config member.name ${DEPLOYMENT_GIT_USER_NAME}
+                        sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./member-service/Chart.yaml
+                        git add ./member-service/Chart.yaml
                         git commit -m "config: image version 업데이트, 버전: "${BUILD_NUMBER}"" 
                         cd ${currentDir}
                     """
@@ -171,7 +171,7 @@ pipeline{
         stage('Check k8s manifest') {
             steps {
                 // K8S 배포
-                sh 'helm template user-service ./${DEPLOYMENT_CONFIG_K8S}/user-service -n moremore --create-namespace'
+                sh 'helm template member-service ./${DEPLOYMENT_CONFIG_K8S}/member-service -n moremore --create-namespace'
             }
         }
     }

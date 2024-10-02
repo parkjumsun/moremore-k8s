@@ -1,6 +1,6 @@
 apiVersion: v2
-name: user-service
-description: A user-service in moremore application
+name: member-service
+description: A member-service in moremore application
 
 # A chart can be either an 'application' or a 'library' chart.
 #
