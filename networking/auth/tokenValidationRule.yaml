@@ -31,24 +31,3 @@ spec:
     - operation:
         methods: ["GET", "POST"]
         paths: ["/api/auth"]
-
-# ---
-
-# apiVersion: security.istio.io/v1beta1
-# kind: AuthorizationPolicy
-# metadata:
-#   name: auth-policy
-#   namespace: istio-system
-# spec:
-#   selector:
-#     matchLabels:
-#       istio: gateway
-#   action: ALLOW
-#   rules:
-#   - from:
-#     - source:
-#         requestPrincipals: ["*"]
-#   - to:
-#     - operation:
-#         methods: ["GET"]
-#         paths: ["/api/club"]
