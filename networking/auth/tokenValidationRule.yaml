@@ -8,7 +8,7 @@ spec:
       istio: gateway
   jwtRules:
   - issuer: "moremore"
-    jwksUri: "http://member-service/.well-known/jwks.json"
+    jwksUri: "http://member-service.moremore/.moremore/jwks.json"
     fromHeaders:
     - name: Authorization
       prefix: "Bearer "
