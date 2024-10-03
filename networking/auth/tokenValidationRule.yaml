@@ -29,5 +29,5 @@ spec:
   rules:
   - to:
     - operation:
-        methods: ["GET", "POST"]
+        methods: ["POST"]
         paths: ["/api/auth"]
