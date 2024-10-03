@@ -14,20 +14,3 @@ spec:
     - name: Authorization
       prefix: "Bearer "
 
----
-
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: all-auth
-  namespace: istio-system
-spec:
-  selector:
-    matchLabels:
-      istio: gateway
-  action: ALLOW
-  rules:
-  - to:
-    - operation:
-        methods: ["POST"]
-        paths: ["/api/auth"]
