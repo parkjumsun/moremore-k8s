@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(choices: ['option', 'kubectl apply', 'kubectl delete'], name: 'DEPLOY_COMMAND', description: '배포 타입 선택')
+    }
+
+    environment {
+        INSTALL_PATH = 'networking/auth'
+        NAME_SPACE = 'moremore'
+    }
+
+    stages {
+        stage('deploy token validation rule') {
+            steps {
+                script{
+                    sh "${params.DEPLOY_COMMAND} -f ${INSTALL_PATH}/tokenValidationRule.yaml -n ${NAME_SPACE}"
+                }
+            }
+        }
+    }
+}
