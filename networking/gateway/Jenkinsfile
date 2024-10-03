@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         INSTALL_PATH = 'networking/gateway'
-        NAME_SPACE = 'istio-system'
+        NAME_SPACE = 'moremore'
     }
 
     stages {

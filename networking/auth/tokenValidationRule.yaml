@@ -2,7 +2,6 @@ apiVersion: security.istio.io/v1beta1
 kind: RequestAuthentication
 metadata:
   name: jwt-auth
-  namespace: istio-system
 spec:
   selector:
     matchLabels:
@@ -18,7 +17,6 @@ apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: auth-policy
-  namespace: istio-system
 spec:
   selector:
     matchLabels:
