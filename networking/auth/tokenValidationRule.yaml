@@ -23,7 +23,7 @@ spec:
   selector:
     matchLabels:
       istio: gateway
-  action: DENY
+  action: ALLOW
   rules:
   - from:
     - source:
