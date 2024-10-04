@@ -52,6 +52,12 @@ pipeline{
                         } 
                         sh 'cd ${currentDir}'
                     }
+                    dir(SOURCE_WORKSPACE) {
+                        withCredentials([file(credentialsId: 'account-env', variable: 'key')]) {
+                            sh 'cp ${key} ./.env'
+                        } 
+                        sh 'cd ${currentDir}'
+                    }
                 }
             }
         }
