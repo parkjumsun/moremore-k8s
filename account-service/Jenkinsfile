@@ -1,0 +1,178 @@
+pipeline{
+    agent any
+
+    environment { 
+        DOCKERHUB_REPOSITORY = "parkjumsun/account-service"  //docker hub id와 repository 이름
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-jenkins') // jenkins에 등록해 놓은 docker hub credentials 이름
+        // dockerImage = ''
+        // containerName = 'invitation'
+        // PORT = '8090:8090'
+        
+        SOURCE_WORKSPACE = 'source/backend/AccountService'
+        SOURCE_ROOT = 'source'
+        SOURCE_GIT_URL = 'https://lab.ssafy.com/s11-fintech-finance-sub1/S11P21A605.git'
+        SOURCE_GIT_BRANCH = 'account/main'
+        SOURCE_BUILD_DIR = 'source/backend/AccountService/build/libs'
+        
+        
+        DEPLOYMENT_GIT_USER_NAME = 'parkjumsun'
+        DEPLOYMENT_GIT_USER_EMAIL = 'pjsw8361@gmail.com'        
+        DEPLOYMENT_REPO_NAME = 'moremore-k8s'
+        DEPLOYMENT_CONFIG_GIT_URL = 'https://github.com/parkjumsun/moremore-k8s.git'
+        DEPLOYMENT_CONFIG_ROOT = 'config' 
+        DEPLOYMENT_CONFIG_DOCKER = 'config/account-service/docker'
+        DEPLOYMENT_CONFIG_K8S = 'config/account-service/helm'        
+        // SCANNER_HOME = tool 'sonarqube-scanner'
+        // SONAR_PROJECT_NAME = 'S11P12A310'
+        // SONAR_PROJECT_KEY = 'S11P12A310'
+        GIT_CREDENTIALS_ID = 'git-ssh-credentials'
+        
+    }
+        
+    stages{
+        stage('Clone source repository'){
+            steps{
+                script{
+                    def currentDir = pwd()
+                    dir(SOURCE_ROOT){
+                        git branch: SOURCE_GIT_BRANCH, credentialsId: 'gitlab_token', url: SOURCE_GIT_URL
+                    }
+                    sh 'cd ${currentDir}'
+                }
+            }
+        }
+        stage('Add env'){
+            steps {
+                script{
+                    def currentDir = pwd()
+                    dir(SOURCE_WORKSPACE) {
+                        withCredentials([file(credentialsId: 'account-application', variable: 'key')]) {
+                            sh 'chmod -R u+w src/main/resources'
+                            sh 'cp ${key} src/main/resources/application-prod.yml'
+                        } 
+                        sh 'cd ${currentDir}'
+                    }
+                }
+            }
+        }
+        
+        // stage('static analysys with sonarQube'){
+        //     steps{
+        //         script{
+        //             dir(SOURCE_WORKSPACE){
+        //                 withSonarQubeEnv('ilcho-sonarQube') {
+        //                     sh 'chmod +x ./gradlew'
+        //                     sh './gradlew sonar'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        
+        stage('Build using gradle'){
+            steps{
+                script{
+                    def currentDir = pwd()
+                    dir(SOURCE_WORKSPACE) {
+                        sh 'chmod +x ./gradlew'
+                        sh './gradlew clean build -x test'
+                        sh 'cd ${currentDir}'
+                    }
+                }
+            }
+        }
+
+        stage('Clone deployment config repository'){
+            steps{
+                script{
+                    def currentDir = pwd()
+                    dir(DEPLOYMENT_CONFIG_ROOT){
+                        git branch: 'main', url: DEPLOYMENT_CONFIG_GIT_URL
+                        sh 'cd ${currentDir}'
+                    }
+                }
+            }
+        }
+        
+        stage('Build container image'){
+            steps{
+                script{
+                    def currentDir = pwd()
+                    sh 'cp ${SOURCE_BUILD_DIR}/AccountService-0.0.1-SNAPSHOT.jar ${DEPLOYMENT_CONFIG_DOCKER}/AccountService.jar '
+                    dir(DEPLOYMENT_CONFIG_DOCKER){
+                        sh 'docker build . -t ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}'
+                        sh 'cd ${currentDir}'
+                    }
+                }
+            }
+        }        
+        stage('Login dockerhub'){
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-jenkins', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                    sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin" // docker hub 로그인
+                }
+            }
+        }
+        
+        stage('Push image to registry') { 
+            steps {
+                script {
+                    sh 'docker push ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}' //docker push
+                } 
+            }
+        } 
+        
+        stage('Remove build image') {
+            steps {
+                script {
+                    try {
+                        sh 'docker rmi ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}' 
+                    } catch (e) {
+                        sh 'echo "fail to stop and remove container"'
+                    }
+                }
+            }
+        }
+        
+        stage('Change version of image') {
+            steps {
+              script{
+                def currentDir = pwd()
+                dir(DEPLOYMENT_CONFIG_K8S){
+                    sh """
+                        git config user.email ${DEPLOYMENT_GIT_USER_EMAIL}
+                        git config user.name ${DEPLOYMENT_GIT_USER_NAME}
+                        sed -i 's/^appVersion:.*/appVersion: "${BUILD_NUMBER}"/' ./account-service/Chart.yaml
+                        git add ./account-service/Chart.yaml
+                        git commit -m "config: image version 업데이트, 버전: "${BUILD_NUMBER}"" 
+                        cd ${currentDir}
+                    """
+                    }
+                }
+            }
+        }
+        
+        stage('Push updated file to config repository') {
+            steps {
+                script{
+                  def currentDir = pwd()
+                  dir(DEPLOYMENT_CONFIG_ROOT){
+                    //jenkins 계정으로 keygen 생성 및 github 계정에 공개키 등록해주기 
+                    // 처음에 ssh 한번 로그인 해준 후에 접속 가능
+                    sh """
+                        git push git@github.com:${DEPLOYMENT_GIT_USER_NAME}/${DEPLOYMENT_REPO_NAME}.git
+                    """
+                    }
+                }
+            }
+        }        
+
+        stage('Check k8s manifest') {
+            steps {
+                // K8S 배포
+                sh 'helm template account-service ./${DEPLOYMENT_CONFIG_K8S}/account-service -n moremore --create-namespace'
+            }
+        }
+    }
+}
