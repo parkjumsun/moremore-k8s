@@ -32,6 +32,18 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }} 
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
