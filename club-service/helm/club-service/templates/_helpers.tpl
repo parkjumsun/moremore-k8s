@@ -43,15 +43,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 
-{{- define "club-service-preview.labels" -}}
-helm.sh/chart: {{ include "club-service.chart" . }}-preview
-{{ include "club-service.selectorLabels" . }}-preview
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}-preview
-{{- end }}
-
 
 
 {{/*
@@ -61,6 +52,7 @@ Selector labels
 app.kubernetes.io/name: {{ include "club-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
 
 {{/*
 Create the name of the service account to use
