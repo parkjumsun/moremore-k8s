@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:19-jdk-alpine
 WORKDIR /app
 COPY ./PostingService.jar /app/PostingService.jar
 EXPOSE 80

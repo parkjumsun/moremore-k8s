@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:19-jdk-alpine
 WORKDIR /app
 COPY ./ScheduleService.jar /app/ScheduleService.jar
 EXPOSE 80

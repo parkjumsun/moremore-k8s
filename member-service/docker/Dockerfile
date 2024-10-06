@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:19-jdk-alpine
 WORKDIR /app
 COPY ./MemberService.jar /app/MemberService.jar
 EXPOSE 80
