@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:17-jdk-alpine
 WORKDIR /app
 COPY ./ClubService.jar /app/ClubService.jar
 EXPOSE 80
