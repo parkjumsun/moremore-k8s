@@ -23,7 +23,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: club-service-preview
     app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: club-service
+    app.kubernetes.io/name: club-service-preview
     app.kubernetes.io/version: '115'
     argocd.argoproj.io/instance: club-service-preview
     helm.sh/chart: club-service-preview-0.1.0
