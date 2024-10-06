@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:19-jdk-alpine
 WORKDIR /app
 COPY ./ClubService.jar /app/ClubService.jar
 EXPOSE 80
