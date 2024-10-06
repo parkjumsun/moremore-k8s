@@ -22,6 +22,8 @@ spec:
       labels:
         {{- include "club-service.labels" . | nindent 8 }}
         {{- include "club-service.podlabels" . | nindent 8 }}
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -32,18 +34,6 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }} 
-          readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              port: 80
-            periodSeconds: 10
-            failureThreshold: 3
-          livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 80
-            periodSeconds: 10
-            failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
