@@ -21,7 +21,7 @@ kind: Service
 metadata:
   name: {{ include "club-service.fullname" . }}-preview
   labels:
-    {{- include "club-service.labels" . | nindent 4 }}
+    {{- include "club-service-preview.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
