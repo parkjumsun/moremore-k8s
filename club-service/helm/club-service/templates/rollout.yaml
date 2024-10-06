@@ -23,7 +23,7 @@ spec:
         {{- include "club-service.labels" . | nindent 8 }}
         {{- include "club-service.podlabels" . | nindent 8 }}
       annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+        sidecar.istio.io/rewriteAppHTTPProbers: false
     spec:
       containers:
         - name: {{ .Chart.Name }}
