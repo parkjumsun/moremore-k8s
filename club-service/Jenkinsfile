@@ -74,7 +74,6 @@ pipeline{
                 script{
                     dir(SOURCE_WORKSPACE){
                         sh './gradlew clean test jacocoTestReport'
-                        sh 'ls -l ./build'
                     }
                 }
             }
@@ -86,7 +85,7 @@ pipeline{
                     def currentDir = pwd()
                     dir(SOURCE_WORKSPACE) {
                         sh 'chmod +x ./gradlew'
-                        sh './gradlew clean build -x test'
+                        sh './gradlew build -x test'
                         sh 'cd ${currentDir}'
                     }
                 }
