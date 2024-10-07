@@ -74,6 +74,7 @@ pipeline{
                 script{
                     dir(SOURCE_WORKSPACE){
                         sh './gradlew clean test jacocoTestReport'
+                        sh 'ls -l ./build'
                     }
                 }
             }
