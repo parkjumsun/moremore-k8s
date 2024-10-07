@@ -187,8 +187,8 @@ pipeline{
 
     post {
         always {
-            jacoco execPattern: '**/build/jacoco/test.exec', classPattern: '**/build/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/*.class'
             junit '**/build/test-results/test/*.xml'
+            jacoco execPattern: '**/build/jacoco/test.exec', classPattern: '**/build/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/*.class'
         }
 
         success {
