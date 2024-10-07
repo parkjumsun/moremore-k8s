@@ -186,6 +186,10 @@ pipeline{
     }
 
     post {
+        always {
+            jacoco execPattern: '**/build/jacoco/test.exec', classPattern: '**/build/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/*.class'
+        }
+
         success {
         	script {
                 def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
