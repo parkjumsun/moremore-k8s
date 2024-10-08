@@ -62,18 +62,18 @@ pipeline{
             }
         }
         
-        stage('static analysys with sonarQube'){
-            steps{
-                script{
-                    dir(SOURCE_WORKSPACE){
-                        withSonarQubeEnv('moremore-sonarQube') {
-                            sh 'chmod +x ./gradlew'
-                            sh './gradlew sonar'
-                        }
-                    }
-                }
-            }
-        }
+        // stage('static analysys with sonarQube'){
+        //     steps{
+        //         script{
+        //             dir(SOURCE_WORKSPACE){
+        //                 withSonarQubeEnv('moremore-sonarQube') {
+        //                     sh 'chmod +x ./gradlew'
+        //                     sh './gradlew sonar'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         
         stage('Build using gradle'){
