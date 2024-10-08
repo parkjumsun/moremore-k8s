@@ -53,7 +53,7 @@ pipeline{
                             sh 'cp ${key} src/main/resources/firebase-adminsdk.json'
                         } 
                         withCredentials([file(credentialsId: 'google-service.json', variable: 'key')]) {
-                            sh 'cp ${key} google-service.json'
+                            sh 'cp ${key} ./google-service.json'
                         } 
 
                         sh 'cd ${currentDir}'
