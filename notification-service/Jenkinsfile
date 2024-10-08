@@ -13,8 +13,7 @@ pipeline{
         SOURCE_GIT_URL = 'https://lab.ssafy.com/s11-fintech-finance-sub1/S11P21A605.git'
         SOURCE_GIT_BRANCH = 'notification/main'
         SOURCE_BUILD_DIR = 'source/backend/NotificationService/build/libs'
-        
-        
+
         DEPLOYMENT_GIT_USER_NAME = 'parkjumsun'
         DEPLOYMENT_GIT_USER_EMAIL = 'pjsw8361@gmail.com'        
         DEPLOYMENT_REPO_NAME = 'moremore-k8s'
@@ -50,6 +49,13 @@ pipeline{
                             sh 'chmod -R u+w src/main/resources'
                             sh 'cp ${key} src/main/resources/application-prod.yml'
                         } 
+                        withCredentials([file(credentialsId: 'firebase-adminsdk.json', variable: 'key')]) {
+                            sh 'cp ${key} src/main/resources/firebase-adminsdk.json'
+                        } 
+                        withCredentials([file(credentialsId: 'google-service.json', variable: 'key')]) {
+                            sh 'cp ${key} google-service.json'
+                        } 
+
                         sh 'cd ${currentDir}'
                     }
                 }
@@ -154,7 +160,7 @@ pipeline{
         }
         
         stage('Push updated file to config repository') {
-            steps {
+            steps {xw
                 script{
                   def currentDir = pwd()
                   dir(DEPLOYMENT_CONFIG_ROOT){
