@@ -160,7 +160,7 @@ pipeline{
         }
         
         stage('Push updated file to config repository') {
-            steps {xw
+            steps {
                 script{
                   def currentDir = pwd()
                   dir(DEPLOYMENT_CONFIG_ROOT){
