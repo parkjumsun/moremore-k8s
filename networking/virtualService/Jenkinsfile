@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(choices: ['option', 'kubectl apply', 'kubectl delete'], name: 'DEPLOY_COMMAND', description: '배포 타입 선택')
-        choice(choices: ['option', 'clubVs', 'scheduleVs', 'postingVs', 'memberVs', 'accountVs'], name: 'TARGET_VIRTUAL_SERVICE', description: 'Virtual Service 대상 선택')
+        choice(choices: ['option', 'clubVs', 'scheduleVs', 'postingVs', 'memberVs', 'accountVs', 'notificationVs'], name: 'TARGET_VIRTUAL_SERVICE', description: 'Virtual Service 대상 선택')
     }
 
     environment {
