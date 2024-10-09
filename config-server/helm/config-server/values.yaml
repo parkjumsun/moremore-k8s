@@ -46,9 +46,9 @@ securityContext:
 service:
   type: NodePort
   port: 80
-  nodePort: 31082
+  nodePort: 31087
   targetPort: 80
-  nodePortPreview: 31182
+  nodePortPreview: 31187
   portName: 'http-config'
 
 ingress:
@@ -73,10 +73,6 @@ resources:
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  requests:
-    cpu: "100m"
-  limits:
-    cpu: "100m"
 
 autoscaling:
   enabled: false

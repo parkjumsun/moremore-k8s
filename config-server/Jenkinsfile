@@ -48,7 +48,7 @@ pipeline{
                     dir(SOURCE_WORKSPACE) {
                         withCredentials([file(credentialsId: 'config-application', variable: 'key')]) {
                             sh 'chmod -R u+w src/main/resources'
-                            sh 'cp ${key} src/main/resources/application-prod.yml'
+                            sh 'cp ${key} src/main/resources/application.yml'
                         } 
                         sh 'cd ${currentDir}'
                     }
@@ -171,7 +171,7 @@ pipeline{
         stage('Check k8s manifest') {
             steps {
                 // K8S 배포
-                sh 'helm template config-server ./${DEPLOYMENT_CONFIG_K8S}/config-server -n moremore --create-namespace'
+                sh 'helm template config-server ./${DEPLOYMENT_CONFIG_K8S}/config-server -n config --create-namespace'
             }
         }
     }
