@@ -13,7 +13,6 @@ pipeline{
         SOURCE_GIT_URL = 'https://lab.ssafy.com/s11-fintech-finance-sub1/S11P21A605.git'
         SOURCE_GIT_BRANCH = 'FE'
         SOURCE_PACKAGE_DIR = 'source/frontend'
-         
         DEPLOYMENT_GIT_USER_NAME = 'parkjumsun'
         DEPLOYMENT_GIT_USER_EMAIL = 'pjsw8361@gmail.com'        
         DEPLOYMENT_REPO_NAME = 'moremore-k8s'
@@ -41,7 +40,7 @@ pipeline{
         }
         stage('Add Env'){
             steps {
-                dir(WORKSPACE) {
+                dir(SOURCE_WORKSPACE) {
                     withCredentials([file(credentialsId: 'react-env', variable: 'key')]) {
                         sh 'chmod -R u+w .'
                         sh 'cp ${key} ./.env'
