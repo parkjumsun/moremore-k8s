@@ -39,19 +39,16 @@ pipeline{
                 }
             }
         }
-        // stage('Add env'){
-        //     steps {
-        //         script{
-        //             def currentDir = pwd()
-        //             dir(SOURCE_WORKSPACE) {
-        //                 withCredentials([file(credentialsId: 'schedule-application', variable: 'key')]) {
-        //                     sh 'chmod -R u+w src/main/resources'
-        //                     sh 'cp ${key} src/main/resources/application-prod.yml'
-        //                 } 
-        //                 sh 'cd ${currentDir}'
-        //             }
-        //         }
-        //     }
+        stage('Add Env'){
+            steps {
+                dir(WORKSPACE) {
+                    withCredentials([file(credentialsId: 'react-env', variable: 'key')]) {
+                        sh 'chmod -R u+w .'
+                        sh 'cp ${key} .env'
+                    }
+                }
+            }
+        }      
         // }
         
         // stage('static analysys with sonarQube'){
