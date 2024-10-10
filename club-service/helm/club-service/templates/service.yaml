@@ -14,5 +14,27 @@ spec:
   selector:
     {{- include "club-service.selectorLabels" . | nindent 4 }}
 
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "club-service.fullname" . }}-preview
+  labels:
+    app.kubernetes.io/instance: club-service-preview
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: club-service-preview
+    app.kubernetes.io/version: '115'
+    argocd.argoproj.io/instance: club-service-preview
+    helm.sh/chart: club-service-preview-0.1.0
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }} 
+      nodePort: {{ .Values.service.nodePortPreview }}
+      name: {{ .Values.service.portName }}-preview
+  selector:
+    {{- include "club-service.selectorLabels" . | nindent 4 }}
 
 
