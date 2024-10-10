@@ -45,10 +45,6 @@ pipeline{
                 script{
                     def currentDir = pwd()
                     dir(SOURCE_WORKSPACE) {
-                        withCredentials([file(credentialsId: 'notification-application', variable: 'key')]) {
-                            sh 'chmod -R u+w src/main/resources'
-                            sh 'cp ${key} src/main/resources/application-prod.yml'
-                        } 
                         withCredentials([file(credentialsId: 'firebase-adminsdk.json', variable: 'key')]) {
                             sh 'cp ${key} src/main/resources/firebase-adminsdk.json'
                         } 
