@@ -41,20 +41,20 @@ pipeline{
                 }
             }
         }
-        stage('Add env'){
-            steps {
-                script{
-                    def currentDir = pwd()
-                    dir(SOURCE_WORKSPACE) {
-                        withCredentials([file(credentialsId: 'member-application', variable: 'key')]) {
-                            sh 'chmod -R u+w src/main/resources'
-                            sh 'cp ${key} src/main/resources/application-prod.yml'
-                        } 
-                        sh 'cd ${currentDir}'
-                    }
-                }
-            }
-        }
+        // stage('Add env'){
+        //     steps {
+        //         script{
+        //             def currentDir = pwd()
+        //             dir(SOURCE_WORKSPACE) {
+        //                 withCredentials([file(credentialsId: 'member-application', variable: 'key')]) {
+        //                     sh 'chmod -R u+w src/main/resources'
+        //                     sh 'cp ${key} src/main/resources/application-prod.yml'
+        //                 } 
+        //                 sh 'cd ${currentDir}'
+        //             }
+        //         }
+        //     }
+        // }
         
         stage('static analysys with sonarQube'){
             steps{
