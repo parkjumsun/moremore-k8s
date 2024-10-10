@@ -44,9 +44,6 @@ pipeline{
                     withCredentials([file(credentialsId: 'react-env', variable: 'key')]) {
                         sh 'chmod -R u+w .'
                         sh 'cp ${key} ./.env'
-                        sh 'ls -al'
-                        sh 'cat .env'
-                        sh 'pwd'
                     }
                 }
             }
