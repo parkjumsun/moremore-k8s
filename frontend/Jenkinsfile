@@ -44,7 +44,6 @@ pipeline{
                     withCredentials([file(credentialsId: 'react-env', variable: 'key')]) {
                         sh 'chmod -R u+w .'
                         sh 'cp ${key} ./.env'
-                        sh 'chmod 777 ./.env '
                     }
                 }
             }
@@ -81,6 +80,7 @@ pipeline{
                 script{
                     def currentDir = pwd()
                     sh 'cp -r ${SOURCE_PACKAGE_DIR}/* ${DEPLOYMENT_CONFIG_DOCKER}/'
+                    sh 'cp ${SOURCE_PACKAGE_DIR}/.env ${DEPLOYMENT_CONFIG_DOCKER}/.env'
                     dir(DEPLOYMENT_CONFIG_DOCKER){
                         sh 'docker build . -t ${DOCKERHUB_REPOSITORY}:${BUILD_NUMBER}'
                         sh 'cd ${currentDir}'
